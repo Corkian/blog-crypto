@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+<h1>The Top 100 Crypto</h1>
+{% endblock %}
+
+{% block content %}
+<link href="/static/css/table.css" rel="stylesheet">
+<div class="container">
+
+    <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 style="margin-bottom:20px">May The Odds Be With You</h2>
+
+
+        <sub><em>*Table contents is being updated every minute via CoinMarketCap's API</em></sub>
+        <div id="table">
+            <table class="content-table">
+
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Symbol</th>
+                    <th>Price</th>
+                    <th>24h % change</th>
+                    <th>Market Cap</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for crypto in query %}
+                <tr>
+                    <td>{{crypto.name}}</td>
+                    <td>{{crypto.symbol}}</td>
+                    <td>{{"${:,.2f}".format(crypto.price)}}</td>
+                    <td
+                    {% if crypto.percent_change_24h < 0 %} class="bear" {% else %} class="bull" {% endif
+                    %}>{{crypto.percent_change_24h}}%</td>
+                    <td>{{ "${:,}".format(crypto.market_cap)}}</td>
+                </tr>
+                <tr>
+                    {% endfor %}
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+<hr>
+<script type=text/javascript>
+setInterval(function()
+{
+$('#table').load(document.URL +  ' #table');
+}, 30000)
+
+</script>
+
+{% endblock %}

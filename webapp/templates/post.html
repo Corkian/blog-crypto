@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+<h1>Blogpost</h1>
+{% endblock %}
+
+{% block content %}
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading">
+              <h1>{{ post.title }}</h1>
+              <h2 class="post-subtitle">{{ post.subtitle }}</h2>
+              <span>Posted by
+                {{ post.author }}
+                on {{ post.date_posted.strftime('%B %d, %Y') }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Post Content -->
+    <article style="margin:40px">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            {{ post.content|safe }}
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <hr>
+{% endblock %}

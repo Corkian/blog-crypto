@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+<h1>Login</h1>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+            {% if current_user.is_authenticated %}
+            <h2 class="form-signin-heading">You are already logged in as {{ current_user.username }}</h2>
+            {% else %}
+            <div class="container">
+
+                <form class="form-signin" method="POST" action="/login">
+                    {% if invalid %}
+                    <h2 class="form-signin-heading">Username or password invalid</h2>
+                    {% else %}
+                    <h2 class="form-signin-heading">Please sign in</h2>
+                     {% endif %}
+                    {{ form.hidden_tag() }}
+                    {{ wtf.form_field(form.username) }}
+                    {{ wtf.form_field(form.password) }}
+                    {{ wtf.form_field(form.remember) }}
+                    <button class="btn btn-primary" type="submit">Sign in</button>
+                    <a class="btn btn-secondary" href="signup">Register</a>
+                </form>
+            </div>
+            {% endif %}
+<hr>
+            {% endblock %}
