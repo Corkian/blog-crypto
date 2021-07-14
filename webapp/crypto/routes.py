@@ -8,7 +8,7 @@ cryptos_bp = Blueprint('crypto', __name__)
 
 @cryptos_bp.route("/crypto")
 def crypto():
-    query = db.session.query(Crypto).all()
+    query = Crypto.query.order_by(Crypto.id.asc()).all()
     return render_template("crypto.html", query=query)
 
 
